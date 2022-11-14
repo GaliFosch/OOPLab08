@@ -7,36 +7,50 @@ import java.io.PrintStream;
 /**
  * Application controller. Performs the I/O.
  */
-public class Controller {
+public final class Controller {
 
-    private final static String PATH = System.getProperty("user.home")
-            +System.getProperty("file.separator")
-            +"output.txt";
+    private static final String PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + "output.txt";
     private File file;
 
+    /**
+     * 
+     */
     public Controller() {
         this.file = new File(PATH);
     }
 
-    public void printString(final String string) throws IOException{
-        try ( PrintStream ps = new PrintStream(file) ) {
+    /**
+     * @param string
+     * @throws IOException
+     */
+    public void printString(final String string) throws IOException {
+        try (PrintStream ps = new PrintStream(file)) {
             ps.println(string);
-        } catch (IOException e){
+        } catch (IOException e) {
             throw e;
         }
     }
 
+    /**
+     * @param file
+     */
     public void setFile(final File file) {
         this.file = file;
     }
 
+    /**
+     * @return file
+     */
     public File getFile() {
         return file;
     }
 
-    public String getPath(){
+    /**
+     * @return paht of the file
+     */
+    public String getPath() {
         return file.getPath();
     }
-
-    
 }
