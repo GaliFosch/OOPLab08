@@ -11,7 +11,7 @@ import java.util.Objects;
 public final class SimpleController implements Controller {
 
     private String nexString;
-    private ArrayList<String> history;
+    private ArrayList<String> history = new ArrayList<>();
 
     @Override
     public void setNextString(final String string) {
