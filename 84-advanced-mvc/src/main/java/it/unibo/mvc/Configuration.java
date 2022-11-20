@@ -1,19 +1,24 @@
 package it.unibo.mvc;
 
+import java.util.Map;
 
 /**
  * Encapsulates the concept of configuration.
  */
 public final class Configuration {
 
+    private final static String DEFAULT_CON_FILE = "config.yml";
+
     private final int max; 
     private final int min;
     private final int attempts;
 
-    private Configuration(final int max, final int min, final int attempts) {
-        this.max = max;
-        this.min = min;
-        this.attempts = attempts;
+    private Configuration() {
+        final ConfigReader reader = new ConfigReader(DEFAULT_CON_FILE);
+        final Map<String,Integer> map = reader.mapGen();
+        this.max = map.get("maximum");
+        this.min = map.get("minimum");
+        this.attempts = map.get("attempts");
     }
 
     /**
@@ -63,13 +68,10 @@ public final class Configuration {
      */
     public static class Builder {
 
-        private static final int MIN = 0;
-        private static final int MAX = 100;
-        private static final int ATTEMPTS = 10;
 
-        private int min = MIN;
-        private int max = MAX;
-        private int attempts = ATTEMPTS;
+        private int min;
+        private int max;
+        private int attempts;
         private boolean consumed = false;
 
         /**
@@ -107,7 +109,7 @@ public final class Configuration {
                 throw new IllegalStateException("The builder can only be used once");
             }
             consumed = true;
-            return new Configuration(max, min, attempts);
+            return new Configuration();
         }
     }
 }
